@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Weather
+
+  Created by Emre Tanrısever on 11.07.2024.
+  
+*/
+"api_key" = "API Key";
+"enter" = "Enter";
