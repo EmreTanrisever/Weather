@@ -41,6 +41,8 @@ final class HomeViewController: UIViewController {
 
     private var locationManager: CLLocationManager?
     
+    var apiKey: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -80,6 +82,7 @@ extension HomeViewController {
 extension HomeViewController: HomeViewProtocol {
     
     func configure() {
+        apiKeyTextField.text = apiKey
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
         view.addSubviews(apiKeyTextField, enterButton)
