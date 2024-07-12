@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol HomeViewProtocol: AnyObject {
     
     func configure()
+    func prepareLocation()
 }
 
 final class HomeViewController: UIViewController {
-    
-    private lazy var viewModel = HomeViewModel(view: self)
     
     private let apiKeyTextField: UITextField = {
         let textField = UITextField()
@@ -37,6 +37,10 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    private lazy var viewModel: HomeViewModelProtocol = HomeViewModel(view: self)
+
+    private var locationManager: CLLocationManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -51,24 +55,12 @@ extension HomeViewController {
         guard let text = apiKeyTextField.text else { return }
         let isEmty = viewModel.checkTextField(text: text)
         let controller = WeatherViewController()
-        controller.configure(apiKey: text)
+        controller.configure(apiKey: text, location: viewModel.returnLocation())
         isEmty ? navigationController?.pushViewController(controller, animated: true): print("Enter a value to TextField")
     }
 }
 
-extension HomeViewController: HomeViewProtocol {
-    
-    func configure() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-        
-        view.addSubviews(apiKeyTextField, enterButton)
-        
-        apiKeyTextField.becomeFirstResponder()
-        enterButton.addTarget(self, action: #selector(enterButtonTapped), for: .touchUpInside)
-        
-        
-        setConstraints()
-    }
+extension HomeViewController {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -82,5 +74,37 @@ extension HomeViewController: HomeViewProtocol {
             enterButton.topAnchor.constraint(equalTo: apiKeyTextField.bottomAnchor, constant: 8),
             enterButton.heightAnchor.constraint(equalToConstant: 48)
         ])
+    }
+}
+
+extension HomeViewController: HomeViewProtocol {
+    
+    func configure() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+        
+        view.addSubviews(apiKeyTextField, enterButton)
+        
+        apiKeyTextField.becomeFirstResponder()
+        enterButton.addTarget(self, action: #selector(enterButtonTapped), for: .touchUpInside)
+        
+        setConstraints()
+    }
+    
+    func prepareLocation() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
+    }
+}
+
+
+// MARK: - CLLocationManagerDelegate
+extension HomeViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let first = locations.first else { return }
+        viewModel.addLocation(lat: first.coordinate.latitude, lon: first.coordinate.longitude)
     }
 }

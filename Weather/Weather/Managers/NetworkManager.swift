@@ -45,6 +45,20 @@ extension NetworkManager: NetworkManagerProtocol {
         }.resume()
     }
     
+    func fetchImage(urlRequest: EndPointProtocol, completion: @escaping(Result<Data, NetworkErrors>) -> Void) {
+        urlSession.dataTask(with: urlRequest.createURLRequest()) { data, response, error in
+            if error != nil {
+                completion(.failure(.badRequest))
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            completion(.success(data))
+        }.resume()
+    }
+    
     private func convertData<T: Decodable>(type: T.Type, data: Data) -> T? {
         do {
             return try jsonDecoder.decode(type.self, from: data)
@@ -52,4 +66,6 @@ extension NetworkManager: NetworkManagerProtocol {
             return nil
         }
     }
+    
+    
 }

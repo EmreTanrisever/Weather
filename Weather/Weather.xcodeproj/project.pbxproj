@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E58CE3662C414730009A80D2 /* WeatherLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58CE3652C414730009A80D2 /* WeatherLocationResponse.swift */; };
 		E5B2306F2C3FBE1200129011 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2306E2C3FBE1200129011 /* AppDelegate.swift */; };
 		E5B230712C3FBE1200129011 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230702C3FBE1200129011 /* SceneDelegate.swift */; };
 		E5B230732C3FBE1200129011 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230722C3FBE1200129011 /* HomeViewController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E58CE3652C414730009A80D2 /* WeatherLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationResponse.swift; sourceTree = "<group>"; };
 		E5B2306B2C3FBE1200129011 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B2306E2C3FBE1200129011 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5B230702C3FBE1200129011 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				E5B230BC2C3FC61300129011 /* WeatherResponse.swift */,
+				E58CE3652C414730009A80D2 /* WeatherLocationResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				E5B230D62C40083800129011 /* DeleteDecimal+Double.swift in Sources */,
 				E5B230BD2C3FC61300129011 /* WeatherResponse.swift in Sources */,
 				E5B230CC2C3FE7A100129011 /* WeatherViewController.swift in Sources */,
+				E58CE3662C414730009A80D2 /* WeatherLocationResponse.swift in Sources */,
 				E5B230B32C3FC4BB00129011 /* NetworkErrors.swift in Sources */,
 				E5B230C42C3FC82800129011 /* WeatherEndPoint.swift in Sources */,
 			);

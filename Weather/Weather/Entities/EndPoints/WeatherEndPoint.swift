@@ -10,6 +10,7 @@ import Foundation
 enum WeatherEndPoint {
     case getWeatherForecast(lon: Double, lat: Double, apiKey: String)
     case getWeatherIcon(icon: String)
+    case getLocation(lon: Double, lat: Double, apiKey: String)
 }
 
 extension WeatherEndPoint: EndPointProtocol {
@@ -23,6 +24,8 @@ extension WeatherEndPoint: EndPointProtocol {
             return "api.openweathermap.org"
         case .getWeatherIcon(icon: _):
             return "openweathermap.org"
+        case .getLocation(lon: _, lat: _, apiKey: _):
+            return "api.openweathermap.org"
         }
     }
     
@@ -32,6 +35,8 @@ extension WeatherEndPoint: EndPointProtocol {
             return "/data/2.5/onecall"
         case .getWeatherIcon(icon: let icon):
             return "/img/wn/\(icon)@2x.png"
+        case .getLocation(lon: _, lat: _, apiKey: _):
+            return "/data/2.5/weather"
         }
     }
     
@@ -41,6 +46,8 @@ extension WeatherEndPoint: EndPointProtocol {
             return .get
         case .getWeatherIcon(icon: _):
             return .get
+        case .getLocation(lon: _, lat: _, apiKey: _):
+            return .get
         }
     }
     
@@ -49,6 +56,8 @@ extension WeatherEndPoint: EndPointProtocol {
         case .getWeatherForecast(lon: _, lat: _, apiKey: _):
             return nil
         case .getWeatherIcon(icon: _):
+            return nil
+        case .getLocation(lon: _, lat: _, apiKey: _):
             return nil
         }
     }
@@ -66,6 +75,14 @@ extension WeatherEndPoint: EndPointProtocol {
             ]
         case .getWeatherIcon(icon: _):
             return nil
+        case .getLocation(lon: let lon, lat: let lat, apiKey: let apiKey):
+            return [
+                "lat": "\(lat)",
+                "lon": "\(lon)",
+                "lang": "en",
+                "appid": apiKey,
+                "units": "metric"
+            ]
         }
     }
     
