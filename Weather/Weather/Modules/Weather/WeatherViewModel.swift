@@ -111,10 +111,13 @@ extension WeatherViewModel {
     }
     
     private func fetchLocation(apiKey: String, location: [String : Double]) {
+        view?.startSpinnerAnimation()
         weatherService.getLocation(apiKey: apiKey, location: location) { [weak self] result in
             switch result {
             case let .success(location):
+                self?.view?.stopSpinnerAnimation()
                 self?.location = location
+                self?.view?.reloadTableView()
             case let .failure(err):
                 print(err)
             }

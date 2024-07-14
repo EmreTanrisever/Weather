@@ -28,7 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else { return }
         let controller = HomeViewController()
         guard let window = self.window else { return }
-        controller.apiKey = url.host!
+        guard let host = url.host else { return }
+        controller.apiKey = host.components(separatedBy: "=")[1]
         window.rootViewController = UINavigationController(rootViewController: controller)
     }
     

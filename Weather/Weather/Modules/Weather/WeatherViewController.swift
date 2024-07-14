@@ -127,7 +127,7 @@ extension WeatherViewController: UITableViewDelegate {
         
         locationLabel.text = viewModel.returnLocationTitle()
         
-        if let data = self.viewModel.returnTodayImage() {            
+        if let data = self.viewModel.returnTodayImage() {
             iconImageView.image = UIImage(data: data)
         }
         

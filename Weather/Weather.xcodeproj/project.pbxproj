@@ -13,7 +13,6 @@
 		E5B230732C3FBE1200129011 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230722C3FBE1200129011 /* HomeViewController.swift */; };
 		E5B230782C3FBE1400129011 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5B230772C3FBE1400129011 /* Assets.xcassets */; };
 		E5B2307B2C3FBE1400129011 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E5B2307A2C3FBE1400129011 /* Base */; };
-		E5B230862C3FBE1400129011 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230852C3FBE1400129011 /* WeatherTests.swift */; };
 		E5B230902C3FBE1400129011 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2308F2C3FBE1400129011 /* WeatherUITests.swift */; };
 		E5B230922C3FBE1400129011 /* WeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230912C3FBE1400129011 /* WeatherUITestsLaunchTests.swift */; };
 		E5B230AE2C3FBE9800129011 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230AD2C3FBE9800129011 /* HomeViewModel.swift */; };
@@ -32,6 +31,7 @@
 		E5B230D12C3FF8CB00129011 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230D02C3FF8CB00129011 /* WeatherTableViewCell.swift */; };
 		E5B230D42C4002AC00129011 /* TimeStamp+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230D32C4002AC00129011 /* TimeStamp+String.swift */; };
 		E5B230D62C40083800129011 /* DeleteDecimal+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B230D52C40083800129011 /* DeleteDecimal+Double.swift */; };
+		E5F5E7832C44845700C4F3D7 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F5E7822C44845700C4F3D7 /* HomeViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,6 @@
 		E5B2307A2C3FBE1400129011 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5B2307C2C3FBE1400129011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5B230812C3FBE1400129011 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5B230852C3FBE1400129011 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		E5B2308B2C3FBE1400129011 /* WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B2308F2C3FBE1400129011 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		E5B230912C3FBE1400129011 /* WeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -82,6 +81,7 @@
 		E5B230D02C3FF8CB00129011 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		E5B230D32C4002AC00129011 /* TimeStamp+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeStamp+String.swift"; sourceTree = "<group>"; };
 		E5B230D52C40083800129011 /* DeleteDecimal+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeleteDecimal+Double.swift"; sourceTree = "<group>"; };
+		E5F5E7822C44845700C4F3D7 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +148,8 @@
 		E5B230842C3FBE1400129011 /* WeatherTests */ = {
 			isa = PBXGroup;
 			children = (
-				E5B230852C3FBE1400129011 /* WeatherTests.swift */,
+				E5F5E7802C44843500C4F3D7 /* Tests */,
+				E5F5E77F2C44843200C4F3D7 /* Mocks */,
 			);
 			path = WeatherTests;
 			sourceTree = "<group>";
@@ -312,6 +313,29 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		E5F5E77F2C44843200C4F3D7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E5F5E7812C44843900C4F3D7 /* Datas */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		E5F5E7802C44843500C4F3D7 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E5F5E7822C44845700C4F3D7 /* HomeViewModelTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		E5F5E7812C44843900C4F3D7 /* Datas */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Datas;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -383,6 +407,7 @@
 					};
 					E5B230802C3FBE1400129011 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 						TestTargetID = E5B2306A2C3FBE1200129011;
 					};
 					E5B2308A2C3FBE1400129011 = {
@@ -470,7 +495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5B230862C3FBE1400129011 /* WeatherTests.swift in Sources */,
+				E5F5E7832C44845700C4F3D7 /* HomeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +736,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MF89UJF9NQ;
@@ -720,6 +746,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.emretanrisever.WeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Weather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Weather";
@@ -731,6 +758,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MF89UJF9NQ;
