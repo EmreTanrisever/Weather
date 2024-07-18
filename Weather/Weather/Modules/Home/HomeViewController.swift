@@ -56,7 +56,7 @@ extension HomeViewController {
     private func enterButtonTapped(_ senter: UIButton) {
         guard let text = apiKeyTextField.text else { return }
         let isEmty = viewModel.checkTextField(text: text)
-        let controller = WeatherViewController()
+        let controller = WeatherTabbarController()
         controller.configure(apiKey: text, location: viewModel.returnLocation())
         isEmty ? navigationController?.pushViewController(controller, animated: true): print("Enter a value to TextField")
     }

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol WeatherTableViewCellProtocol: AnyObject {
+    func showImage()
+}
+
 class WeatherTableViewCell: UITableViewCell {
     
     static let weatherTableViewIdentifier = "WeatherTableViewIdentifier"
@@ -37,6 +41,8 @@ class WeatherTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    private lazy var viewModel = WeatherCellViewModel(view: self)
     
     required init(coder: NSCoder) {
         fatalError("init(coder: ) has not been implemented.")
@@ -79,14 +85,21 @@ extension WeatherTableViewCell {
     }
     
     func fill(daily: Daily) {
+        viewModel.daily = daily
+        viewModel.fetchImage()
         dayLabel.text = "\(daily.dt.getDay)"
         minTempLabel.text = daily.temp.min.deleteDecimal + "°"
         maxTempLabel.text = daily.temp.max.deleteDecimal + "°"
-        
     }
+}
+
+extension WeatherTableViewCell: WeatherTableViewCellProtocol {
     
-    func fillImages(image: Data?) {
-        guard let data = image else { return }
-        iconImageView.image = UIImage(data: data)
+    func showImage() {
+        DispatchQueue.main.async {
+            if let image = self.viewModel.images {
+                self.iconImageView.image = UIImage(data: image)
+            }
+        }
     }
 }

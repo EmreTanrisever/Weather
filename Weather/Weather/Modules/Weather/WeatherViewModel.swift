@@ -8,14 +8,15 @@
 import Foundation
 
 protocol WeatherViewModelProtocol {
+    var daily: [Daily] { get set }
+    var weatherForecastImages: [Data] { get set }
+    var today: Daily? { get set }
+    var location: WeatherLocationResponse? { get set }
     
     func viewDidLoad()
     func fetchWeatherData(apiKey: String, location: [String: Double])
     func numberOfRowsInSection() -> Int
-    func returnData() -> [Daily]
-    func returnTodayData() -> Daily?
     func returnTodayImage() -> Data?
-    func returnImages() -> [Data]?
     func returnLocation(apiKey: String, location: [String: Double])
     func returnLocationTitle() -> String
 }
@@ -23,10 +24,11 @@ protocol WeatherViewModelProtocol {
 final class WeatherViewModel {
     private let view: WeatherViewControllerProtocol?
     private let weatherService = WeatherService()
-    private var daily: [Daily] = []
-    private var today: Daily?
-    private var imageDatas: [Data] = []
-    private var location: WeatherLocationResponse?
+    
+    var daily: [Daily] = []
+    var weatherForecastImages: [Data] = []
+    var today: Daily?
+    var location: WeatherLocationResponse?
     
     init(view: WeatherViewControllerProtocol?) {
         self.view = view
@@ -34,6 +36,7 @@ final class WeatherViewModel {
 }
 
 extension WeatherViewModel: WeatherViewModelProtocol {
+    
     
     func viewDidLoad() {
         view?.setTitle(title: "weatherApp")
@@ -47,20 +50,8 @@ extension WeatherViewModel: WeatherViewModelProtocol {
         daily.count
     }
     
-    func returnData() -> [Daily] {
-        daily
-    }
-    
-    func returnTodayData() -> Daily? {
-        today
-    }
-    
     func returnTodayImage() -> Data? {
-        imageDatas.first
-    }
-    
-    func returnImages() -> [Data]? {
-        return imageDatas
+        weatherForecastImages.first
     }
     
     func returnLocation(apiKey: String, location: [String : Double]) {
@@ -68,7 +59,6 @@ extension WeatherViewModel: WeatherViewModelProtocol {
     }
         
     func returnLocationTitle() -> String {
-        
         (location?.name ?? "") + ", " + (location?.sys.country ?? "") 
     }
 }
@@ -85,6 +75,8 @@ extension WeatherViewModel {
                     self?.today = self?.daily.first
                     self?.fetchIcon()
                     self?.daily.removeFirst()
+                    self?.view?.stopSpinnerAnimation()
+                    self?.view?.reloadTableView()
                 }
             case let .failure(err):
                 print(err)
@@ -99,15 +91,15 @@ extension WeatherViewModel {
                 weatherService.getWeatherIcon(icon: weather.icon) { [weak self] result in
                     switch result {
                     case let .success(data):
-                        self?.imageDatas.append(data)
+                        self?.weatherForecastImages.append(data)
+                        self?.view?.stopSpinnerAnimation()
+                        self?.view?.reloadTableView()
                     case let .failure(err):
                         print(err)
                     }
                 }
             }
         }
-        view?.stopSpinnerAnimation()
-        view?.reloadTableView()
     }
     
     private func fetchLocation(apiKey: String, location: [String : Double]) {

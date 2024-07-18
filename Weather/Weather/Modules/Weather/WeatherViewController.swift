@@ -39,12 +39,13 @@ final class WeatherViewController: UIViewController {
         super.viewDidLoad()
         viewModel.viewDidLoad()
     }
+    
 }
 
-// MARK: WeatherViewController extension
+// MARK: - WeatherViewController extension
 extension WeatherViewController {
     
-    func setConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -57,11 +58,11 @@ extension WeatherViewController {
     }
 }
 
-// MARK: WeatherViewControllerProtocol
+// MARK: - WeatherViewControllerProtocol
 extension WeatherViewController: WeatherViewControllerProtocol {
     
     func configure(apiKey: String, location: [String: Double]) {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundColor")
         
         viewModel.fetchWeatherData(apiKey: apiKey, location: location)
         viewModel.returnLocation(apiKey: apiKey, location: location)
@@ -93,7 +94,7 @@ extension WeatherViewController: WeatherViewControllerProtocol {
     }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension WeatherViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -119,8 +120,8 @@ extension WeatherViewController: UITableViewDelegate {
             return label
         }()
         
-        if let todayTemp = viewModel.returnTodayData()?.temp.day {
-            tempLabel.text =  "\(todayTemp.deleteDecimal)" + "°"
+        if let today = viewModel.today {
+            tempLabel.text =  "\(today.temp.day.deleteDecimal)" + "°"
         }
         
         headerView.addSubviews(iconImageView, tempLabel, locationLabel)
@@ -165,11 +166,7 @@ extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.weatherTableViewIdentifier) as? WeatherTableViewCell else { return UITableViewCell() }
-        
-        cell.fill(daily: viewModel.returnData()[indexPath.row])
-        if let images = viewModel.returnImages() {
-            cell.fillImages(image: images[indexPath.row])
-        }
+        cell.fill(daily: viewModel.daily[indexPath.row])
         return cell
     }
 }

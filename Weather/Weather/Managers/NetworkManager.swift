@@ -50,7 +50,6 @@ extension NetworkManager: NetworkManagerProtocol {
             if error != nil {
                 completion(.failure(.badRequest))
             }
-            
             guard let data = data else {
                 completion(.failure(.noData))
                 return
