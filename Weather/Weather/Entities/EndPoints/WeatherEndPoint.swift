@@ -8,7 +8,9 @@
 import Foundation
 
 enum WeatherEndPoint {
-    case getWeatherForecast(lon: Double, lat: Double)
+    case getWeatherForecast(lon: Double, lat: Double, apiKey: String)
+    case getWeatherIcon(icon: String)
+    case getLocation(lon: Double, lat: Double, apiKey: String)
 }
 
 extension WeatherEndPoint: EndPointProtocol {
@@ -17,36 +19,68 @@ extension WeatherEndPoint: EndPointProtocol {
     }
     
     var host: String {
-        "api.openweathermap.org"
+        switch self {
+        case .getWeatherForecast(lon: _, lat: _, apiKey: _):
+            return "api.openweathermap.org"
+        case .getWeatherIcon(icon: _):
+            return "openweathermap.org"
+        case .getLocation(lon: _, lat: _, apiKey: _):
+            return "api.openweathermap.org"
+        }
     }
     
     var path: String {
-        "/data/2.5/onecall"
+        switch self {
+        case .getWeatherForecast(lon: _, lat: _, apiKey: _):
+            return "/data/2.5/onecall"
+        case .getWeatherIcon(icon: let icon):
+            return "/img/wn/\(icon)@2x.png"
+        case .getLocation(lon: _, lat: _, apiKey: _):
+            return "/data/2.5/weather"
+        }
     }
     
     var httpMethod: HttpMethods {
         switch self {
-        case .getWeatherForecast(lon: _, lat: _):
+        case .getWeatherForecast(lon: _, lat: _, apiKey: _):
+            return .get
+        case .getWeatherIcon(icon: _):
+            return .get
+        case .getLocation(lon: _, lat: _, apiKey: _):
             return .get
         }
     }
     
     var header: [String : String]? {
         switch self {
-        case .getWeatherForecast(lon: _, lat: _):
+        case .getWeatherForecast(lon: _, lat: _, apiKey: _):
+            return nil
+        case .getWeatherIcon(icon: _):
+            return nil
+        case .getLocation(lon: _, lat: _, apiKey: _):
             return nil
         }
     }
     
     var parameters: [String : Any]? {
         switch self {
-        case .getWeatherForecast(lon: let lon, lat: let lat):
+        case .getWeatherForecast(lon: let lon, lat: let lat, apiKey: let apiKey):
             return [
                 "lat": "\(lat)",
                 "lon": "\(lon)",
                 "lang": "en",
                 "ced": "7",
-                "appid": "8ddadecc7ae4f56fee73b2b405a63659",
+                "appid": apiKey,
+                "units": "metric"
+            ]
+        case .getWeatherIcon(icon: _):
+            return nil
+        case .getLocation(lon: let lon, lat: let lat, apiKey: let apiKey):
+            return [
+                "lat": "\(lat)",
+                "lon": "\(lon)",
+                "lang": "en",
+                "appid": apiKey,
                 "units": "metric"
             ]
         }
