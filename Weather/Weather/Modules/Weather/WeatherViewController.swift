@@ -28,7 +28,9 @@ final class WeatherViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.weatherTableViewIdentifier)
+        tableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: "TodayForecastTableViewCell")
+        tableView.register(HourForecastTableViewCell.self, forCellReuseIdentifier: "HourForecastTableViewCell")
+        tableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: "DailyForecastTableViewCell")
         tableView.rowHeight = 40
         return tableView
     }()
@@ -97,59 +99,18 @@ extension WeatherViewController: WeatherViewControllerProtocol {
 // MARK: - UITableViewDelegate
 extension WeatherViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height / 3))
-        
-        let iconImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
-        
-        let tempLabel: UILabel = {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = UIFont.systemFont(ofSize: 40, weight: .light)
-            return label
-        }()
-        
-        let locationLabel: UILabel = {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-            return label
-        }()
-        
-        if let today = viewModel.today {
-            tempLabel.text =  "\(today.temp.day.deleteDecimal)" + "°"
-        }
-        
-        headerView.addSubviews(iconImageView, tempLabel, locationLabel)
-        
-        locationLabel.text = viewModel.returnLocationTitle()
-        
-        if let data = self.viewModel.returnTodayImage() {
-            iconImageView.image = UIImage(data: data)
-        }
-        
-        NSLayoutConstraint.activate([
-            iconImageView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            iconImageView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 40),
-            iconImageView.heightAnchor.constraint(equalToConstant: 40),
-            
-            tempLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 32),
-            tempLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            
-            locationLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            locationLabel.bottomAnchor.constraint(equalTo: iconImageView.topAnchor, constant: -32)
-        ])
-        
-        return headerView
-    }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        view.frame.height / 3
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            return view.frame.size.height / 3
+        case 1:
+            return 112
+        case 2:
+            return 40
+        default:
+            return 0
+        }
     }
 }
 
@@ -157,16 +118,43 @@ extension WeatherViewController: UITableViewDelegate {
 extension WeatherViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRowsInSection()
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 1
+        case 2:
+            return viewModel.daily.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = weatherTableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.weatherTableViewIdentifier) as? WeatherTableViewCell else { return UITableViewCell() }
-        cell.fill(daily: viewModel.daily[indexPath.row])
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = TodayForecastTableViewCell()
+            if let image = viewModel.returnTodayImage(), let today = viewModel.today {
+                cell.configure(image: image, location: viewModel.returnLocationTitle(), todayTemperature: today.temp.day.deleteDecimal)
+            }
+            cell.selectionStyle = .none
+            return cell
+        case 1:
+            let cell = HourForecastTableViewCell()
+            cell.selectionStyle = .none
+            cell.fillUI(hourly: viewModel.hourly)
+            return cell
+        case 2:
+            let cell = DailyForecastTableViewCell()
+            cell.selectionStyle = .none
+            cell.fillUI(daily: viewModel.daily[indexPath.row])
+            return cell
+        default:
+            return UITableViewCell()
+        }
     }
 }

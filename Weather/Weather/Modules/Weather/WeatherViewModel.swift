@@ -9,6 +9,7 @@ import Foundation
 
 protocol WeatherViewModelProtocol {
     var daily: [Daily] { get set }
+    var hourly: [Hourly] { get set }
     var weatherForecastImages: [Data] { get set }
     var today: Daily? { get set }
     var location: WeatherLocationResponse? { get set }
@@ -26,6 +27,7 @@ final class WeatherViewModel {
     private let weatherService = WeatherService()
     
     var daily: [Daily] = []
+    var hourly: [Hourly] = []
     var weatherForecastImages: [Data] = []
     var today: Daily?
     var location: WeatherLocationResponse?
@@ -72,6 +74,7 @@ extension WeatherViewModel {
             case let .success(weather):
                 DispatchQueue.main.async {
                     self?.daily = weather.daily
+                    self?.hourly = weather.hourly
                     self?.today = self?.daily.first
                     self?.fetchIcon()
                     self?.daily.removeFirst()

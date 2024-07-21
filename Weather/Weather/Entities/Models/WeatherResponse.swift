@@ -12,6 +12,7 @@ struct WeatherResponse: Decodable {
     let lon: Double
     let timezone: String
     let daily: [Daily]
+    let hourly: [Hourly]
 }
 
 struct Current: Decodable {
@@ -31,6 +32,12 @@ struct Daily: Decodable {
     let moonset: Int
     let moon_phase: Double
     let temp: Temp
+    let weather: [Weather]
+}
+
+struct Hourly: Decodable {
+    let dt: Double
+    let temp: Double
     let weather: [Weather]
 }
 
