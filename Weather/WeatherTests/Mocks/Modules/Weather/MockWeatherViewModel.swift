@@ -9,6 +9,7 @@ import Foundation
 @testable import Weather
 
 final class MockWeatherViewModel: WeatherViewModelProtocol {
+    var hourly: [Hourly] = []
     var daily: [Daily] = []
     var weatherForecastImages: [Data] = []
     var today: Daily?
