@@ -21,15 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: controller)
         window.rootViewController = navigationController
         self.window = window
+        window.tintColor = UIColor(named: "TabbarItemColor")
         window.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
         let controller = HomeViewController()
         guard let window = self.window else { return }
-        guard let host = url.host else { return }
-        controller.apiKey = host.components(separatedBy: "=")[1]
         window.rootViewController = UINavigationController(rootViewController: controller)
     }
     

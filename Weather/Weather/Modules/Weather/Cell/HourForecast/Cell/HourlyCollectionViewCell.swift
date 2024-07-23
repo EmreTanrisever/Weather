@@ -51,6 +51,8 @@ extension HourlyCollectionViewCell {
     func configure() {
         contentView.addSubviews(hourLabel, weatherIconImageView,temperatureLabel)
         
+        contentView.backgroundColor = UIColor(named: "BackgroundColor")
+        
         setConstraints()
     }
     
@@ -82,9 +84,9 @@ extension HourlyCollectionViewCell {
 extension HourlyCollectionViewCell: HourlyCollectionViewCellProtocol {
     
     func fillImage() {
-        if let icon = viewModel.icon {
+        if let imageName = viewModel.icon {
             DispatchQueue.main.async { [weak self] in
-                self?.weatherIconImageView.image = UIImage(data: icon)
+                self?.weatherIconImageView.image = UIImage(named: imageName)
             }
         }
     }

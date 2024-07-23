@@ -7,12 +7,11 @@
 
 import UIKit
 
-protocol WeatherViewControllerProtocol: AnyObject {
-    func configure(apiKey: String, location: [String: Double])
+protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
+    func configure(location: [String: Double])
     func startSpinnerAnimation()
     func stopSpinnerAnimation()
     func reloadTableView()
-    func setTitle(title: String)
 }
 
 final class WeatherViewController: UIViewController {
@@ -32,6 +31,8 @@ final class WeatherViewController: UIViewController {
         tableView.register(HourForecastTableViewCell.self, forCellReuseIdentifier: "HourForecastTableViewCell")
         tableView.register(TodayForecastTableViewCell.self, forCellReuseIdentifier: "DailyForecastTableViewCell")
         tableView.rowHeight = 40
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.clear
         return tableView
     }()
     
@@ -40,8 +41,7 @@ final class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
-    }
-    
+    }    
 }
 
 // MARK: - WeatherViewController extension
@@ -63,11 +63,11 @@ extension WeatherViewController {
 // MARK: - WeatherViewControllerProtocol
 extension WeatherViewController: WeatherViewControllerProtocol {
     
-    func configure(apiKey: String, location: [String: Double]) {
+    func configure(location: [String: Double]) {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
-        viewModel.fetchWeatherData(apiKey: apiKey, location: location)
-        viewModel.returnLocation(apiKey: apiKey, location: location)
+        viewModel.fetchWeatherData(location: location)
+        viewModel.returnLocation(location: location)
         
         view.addSubviews(weatherTableView, spinner)
         setConstraints()
@@ -90,24 +90,19 @@ extension WeatherViewController: WeatherViewControllerProtocol {
             self.weatherTableView.reloadData()
         }
     }
-    
-    func setTitle(title: String) {
-        self.title = title.localized
-    }
 }
 
 // MARK: - UITableViewDelegate
 extension WeatherViewController: UITableViewDelegate {
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return view.frame.size.height / 3
+            return 500
         case 1:
             return 112
         case 2:
-            return 40
+            return 72
         default:
             return 0
         }
@@ -139,22 +134,33 @@ extension WeatherViewController: UITableViewDataSource {
         case 0:
             let cell = TodayForecastTableViewCell()
             if let image = viewModel.returnTodayImage(), let today = viewModel.today {
-                cell.configure(image: image, location: viewModel.returnLocationTitle(), todayTemperature: today.temp.day.deleteDecimal)
+                cell.configure(image: image, location: viewModel.returnLocationTitle(), todayTemperature: today.temp.day.deleteDecimal, today: viewModel.today?.weather)
             }
             cell.selectionStyle = .none
+            cell.delegate = self
+            cell.backgroundColor = UIColor.clear
             return cell
         case 1:
             let cell = HourForecastTableViewCell()
             cell.selectionStyle = .none
             cell.fillUI(hourly: viewModel.hourly)
+            cell.backgroundColor = UIColor.clear
             return cell
         case 2:
             let cell = DailyForecastTableViewCell()
             cell.selectionStyle = .none
             cell.fillUI(daily: viewModel.daily[indexPath.row])
+            cell.backgroundColor = UIColor.clear
             return cell
         default:
             return UITableViewCell()
         }
+    }
+}
+
+extension WeatherViewController: CellDelegate {
+    
+    func labelTapped() {
+        tabBarController?.selectedIndex = 1
     }
 }

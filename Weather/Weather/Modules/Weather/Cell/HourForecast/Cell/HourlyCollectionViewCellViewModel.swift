@@ -8,13 +8,13 @@
 import Foundation
 
 protocol HourlyCollectionViewCellViewModelProtocol {
-    var icon: Data? { get set }
+    var icon: String? { get set }
     
     func fetchIcon(weather: [Weather])
 }
 
 final class HourlyCollectionViewCellViewModel {
-    var icon: Data?
+    var icon: String?
     private weak var view: HourlyCollectionViewCellProtocol?
     
     private let weatherService = WeatherService()
@@ -29,15 +29,8 @@ extension HourlyCollectionViewCellViewModel: HourlyCollectionViewCellViewModelPr
     
     func fetchIcon(weather: [Weather]) {
         for weather in weather {
-            weatherService.getWeatherIcon(icon: weather.icon) { [weak self] result in
-                switch result {
-                case let .success(iconData):
-                    self?.icon = iconData
-                    self?.view?.fillImage()
-                case let .failure(err):
-                    print(err)
-                }
-            }
+            icon = ImageManager.shared.returnWeatherImage(imageName: weather.icon)
+            view?.fillImage()
         }
     }
     

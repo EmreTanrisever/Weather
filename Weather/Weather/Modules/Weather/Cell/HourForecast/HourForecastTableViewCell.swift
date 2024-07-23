@@ -20,6 +20,7 @@ final class HourForecastTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(HourlyCollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
+        collectionView.backgroundColor = UIColor(named: "BackgroundColor")
         return collectionView
     }()
     

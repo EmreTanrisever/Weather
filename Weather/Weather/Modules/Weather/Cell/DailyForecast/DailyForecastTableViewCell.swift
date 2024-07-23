@@ -17,20 +17,21 @@ final class DailyForecastTableViewCell: UITableViewCell {
     private let dayLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
     private let minTemperatureLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
     private let maxTemperatureLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
@@ -56,7 +57,7 @@ extension DailyForecastTableViewCell {
     
     func configure() {
         contentView.addSubviews(dayLabel, minTemperatureLabel, maxTemperatureLabel, weatherIconImageView)
-        
+        contentView.backgroundColor = UIColor(named: "BackgroundColor")
         setConstraints()
     }
     
@@ -88,8 +89,7 @@ extension DailyForecastTableViewCell {
             weatherIconImageView.trailingAnchor.constraint(equalTo: maxTemperatureLabel.leadingAnchor, constant: -16),
             weatherIconImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             weatherIconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            weatherIconImageView.widthAnchor.constraint(equalToConstant: 40),
-            weatherIconImageView.heightAnchor.constraint(equalToConstant: 40)
+            weatherIconImageView.widthAnchor.constraint(equalToConstant: 64)
         ])
     }
 }
@@ -97,9 +97,9 @@ extension DailyForecastTableViewCell {
 extension DailyForecastTableViewCell: DailyForecastTableViewCellProtocol {
     
     func fillImage() {
-        if let iconData = viewModel.icon {
+        if let iconName = viewModel.icon {
             DispatchQueue.main.async { [weak self] in
-                self?.weatherIconImageView.image = UIImage(data: iconData)
+                self?.weatherIconImageView.image = UIImage(named: iconName)
             }
         }
     }

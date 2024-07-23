@@ -10,15 +10,14 @@ import Foundation
 protocol WeatherViewModelProtocol {
     var daily: [Daily] { get set }
     var hourly: [Hourly] { get set }
-    var weatherForecastImages: [Data] { get set }
     var today: Daily? { get set }
     var location: WeatherLocationResponse? { get set }
     
     func viewDidLoad()
-    func fetchWeatherData(apiKey: String, location: [String: Double])
+    func fetchWeatherData(location: [String: Double])
     func numberOfRowsInSection() -> Int
-    func returnTodayImage() -> Data?
-    func returnLocation(apiKey: String, location: [String: Double])
+    func returnTodayImage() -> String?
+    func returnLocation(location: [String: Double])
     func returnLocationTitle() -> String
 }
 
@@ -28,7 +27,6 @@ final class WeatherViewModel {
     
     var daily: [Daily] = []
     var hourly: [Hourly] = []
-    var weatherForecastImages: [Data] = []
     var today: Daily?
     var location: WeatherLocationResponse?
     
@@ -39,25 +37,24 @@ final class WeatherViewModel {
 
 extension WeatherViewModel: WeatherViewModelProtocol {
     
-    
     func viewDidLoad() {
-        view?.setTitle(title: "weatherApp")
+   
     }
     
-    func fetchWeatherData(apiKey: String, location: [String: Double]) {
-        getWeatherData(apiKey: apiKey, location: location)
+    func fetchWeatherData(location: [String: Double]) {
+        getWeatherData(location: location)
     }
     
     func numberOfRowsInSection() -> Int {
         daily.count
     }
     
-    func returnTodayImage() -> Data? {
-        weatherForecastImages.first
+    func returnTodayImage() -> String? {
+        today?.weather.first?.icon
     }
     
-    func returnLocation(apiKey: String, location: [String : Double]) {
-        fetchLocation(apiKey: apiKey, location: location)
+    func returnLocation(location: [String : Double]) {
+        fetchLocation(location: location)
     }
         
     func returnLocationTitle() -> String {
@@ -67,54 +64,53 @@ extension WeatherViewModel: WeatherViewModelProtocol {
 
 extension WeatherViewModel {
     
-    private func getWeatherData(apiKey: String, location: [String: Double]) {
+    private func getWeatherData(location: [String: Double]) {
         view?.startSpinnerAnimation()
-        weatherService.getWeatherForecast(apiKey: apiKey, location: location) { [weak self] result in
+        weatherService.getWeatherForecast(location: location) { [weak self] result in
             switch result {
             case let .success(weather):
                 DispatchQueue.main.async {
                     self?.daily = weather.daily
                     self?.hourly = weather.hourly
                     self?.today = self?.daily.first
-                    self?.fetchIcon()
                     self?.daily.removeFirst()
                     self?.view?.stopSpinnerAnimation()
                     self?.view?.reloadTableView()
                 }
             case let .failure(err):
-                print(err)
-            }
-        }
-    }
-    
-    private func fetchIcon() {
-        view?.startSpinnerAnimation()
-        for day in self.daily {
-            for weather in day.weather {
-                weatherService.getWeatherIcon(icon: weather.icon) { [weak self] result in
-                    switch result {
-                    case let .success(data):
-                        self?.weatherForecastImages.append(data)
-                        self?.view?.stopSpinnerAnimation()
-                        self?.view?.reloadTableView()
-                    case let .failure(err):
-                        print(err)
-                    }
+                switch err {
+                case .badRequest:
+                    self?.view?.showAlert(type: .badRequest)
+                case .noData:
+                    self?.view?.showAlert(type: .noData)
+                case .decodeError:
+                    self?.view?.showAlert(type: .decodeError)
+                case .noInternetConnection:
+                    self?.view?.showAlert(type: .noInternetConnection)
                 }
             }
         }
     }
     
-    private func fetchLocation(apiKey: String, location: [String : Double]) {
+    private func fetchLocation(location: [String : Double]) {
         view?.startSpinnerAnimation()
-        weatherService.getLocation(apiKey: apiKey, location: location) { [weak self] result in
+        weatherService.getLocation(location: location) { [weak self] result in
             switch result {
             case let .success(location):
                 self?.view?.stopSpinnerAnimation()
                 self?.location = location
                 self?.view?.reloadTableView()
             case let .failure(err):
-                print(err)
+                switch err {
+                case .badRequest:
+                    self?.view?.showAlert(type: .badRequest)
+                case .noData:
+                    self?.view?.showAlert(type: .noData)
+                case .decodeError:
+                    self?.view?.showAlert(type: .decodeError)
+                case .noInternetConnection:
+                    self?.view?.showAlert(type: .noInternetConnection)
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DailyForecastTableViewCellViewModelProtocol {
-    var icon: Data? { get set }
+    var icon: String? { get set }
     var daily: Daily? { get set }
     func fetch()
 }
@@ -17,7 +17,7 @@ final class DailyForecastTableViewCellViewModel {
     private var weatherService = WeatherService()
     private var view: DailyForecastTableViewCellProtocol?
     
-    var icon: Data?
+    var icon: String?
     var daily: Daily?
     
     init(view: DailyForecastTableViewCellProtocol? = nil) {
@@ -30,15 +30,8 @@ extension DailyForecastTableViewCellViewModel: DailyForecastTableViewCellViewMod
     func fetch() {
         guard let weather = daily?.weather else { return }
         for weather in weather {
-            self.weatherService.getWeatherIcon(icon: weather.icon) { [weak self] result in
-                switch result {
-                case let .success(iconData):
-                    self?.icon = iconData
-                    self?.view?.fillImage()
-                case let .failure(err):
-                    print(err)
-                }
-            }
+            self.icon = ImageManager.shared.returnWeatherImage(imageName: weather.icon)
+            view?.fillImage()
         }
     }
 }

@@ -53,7 +53,7 @@ extension MapViewController {
         var location: [String: Double] = [:]
         location["lat"] = coordinate.latitude
         location["lon"] = coordinate.longitude
-        controller.configure(apiKey: "8ddadecc7ae4f56fee73b2b405a63659", location: location)
+        controller.configure(location: location)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
