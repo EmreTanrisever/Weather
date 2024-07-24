@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
-    func configure(location: [String: Double])
+    func configure(location: [String: Double], from isDetail: Bool)
     func startSpinnerAnimation()
     func stopSpinnerAnimation()
     func reloadTableView()
@@ -37,11 +37,17 @@ final class WeatherViewController: UIViewController {
     }()
     
     lazy var viewModel: WeatherViewModelProtocol = WeatherViewModel(view: self)
+    private var isDetail: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
-    }    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isDetail ? hideNavigationBar() : showNavigationBar()
+    }
 }
 
 // MARK: - WeatherViewController extension
@@ -58,16 +64,30 @@ extension WeatherViewController {
             weatherTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    private func hideNavigationBar() {
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
+    private func showNavigationBar() {
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+    }
 }
 
 // MARK: - WeatherViewControllerProtocol
 extension WeatherViewController: WeatherViewControllerProtocol {
     
-    func configure(location: [String: Double]) {
+    func configure(location: [String: Double], from isDetail: Bool) {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
         viewModel.fetchWeatherData(location: location)
         viewModel.returnLocation(location: location)
+        
+        self.isDetail = isDetail
         
         view.addSubviews(weatherTableView, spinner)
         setConstraints()

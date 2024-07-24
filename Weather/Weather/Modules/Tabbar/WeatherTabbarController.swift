@@ -20,7 +20,7 @@ class WeatherTabbarController: UITabBarController {
         tabBar.layer.shadowOpacity = 0.3
         
         let home = WeatherViewController()
-        home.configure(location: location)
+        home.configure(location: location, from: true)
         home.title = "home".localized
         home.tabBarItem.image = UIImage(named: "Home")
         home.tabBarItem.selectedImage = UIImage(named: "Homefill")

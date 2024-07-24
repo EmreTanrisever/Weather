@@ -14,7 +14,13 @@ protocol MapViewControllerProtocol {
 
 final class MapViewController: UIViewController {
     
-    let mapView: MKMapView = {
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        return searchBar
+    }()
+    
+    private let mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
@@ -27,12 +33,26 @@ final class MapViewController: UIViewController {
         mapViewModel.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
 }
 
 extension MapViewController {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -53,7 +73,7 @@ extension MapViewController {
         var location: [String: Double] = [:]
         location["lat"] = coordinate.latitude
         location["lon"] = coordinate.longitude
-        controller.configure(location: location)
+        controller.configure(location: location, from: false)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -63,7 +83,7 @@ extension MapViewController: MapViewControllerProtocol {
     func configure() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
-        view.addSubview(mapView)
+        view.addSubviews(mapView, searchBar)
         
         mapView.delegate = self
         
