@@ -25,6 +25,7 @@ final class DailyForecastTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .semibold)
+        label.textAlignment = .right
         return label
     }()
     
@@ -32,6 +33,7 @@ final class DailyForecastTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .semibold)
+        label.textAlignment = .right
         return label
     }()
     
@@ -81,12 +83,14 @@ extension DailyForecastTableViewCell {
             minTemperatureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             minTemperatureLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             minTemperatureLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            minTemperatureLabel.widthAnchor.constraint(equalToConstant: 48),
             
-            maxTemperatureLabel.trailingAnchor.constraint(equalTo: minTemperatureLabel.leadingAnchor, constant: -16),
+            maxTemperatureLabel.trailingAnchor.constraint(equalTo: minTemperatureLabel.leadingAnchor),
             maxTemperatureLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             maxTemperatureLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            maxTemperatureLabel.widthAnchor.constraint(equalToConstant: 48),
             
-            weatherIconImageView.trailingAnchor.constraint(equalTo: maxTemperatureLabel.leadingAnchor, constant: -16),
+            weatherIconImageView.trailingAnchor.constraint(equalTo: maxTemperatureLabel.leadingAnchor),
             weatherIconImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             weatherIconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             weatherIconImageView.widthAnchor.constraint(equalToConstant: 64)

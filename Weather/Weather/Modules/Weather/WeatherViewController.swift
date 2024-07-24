@@ -12,6 +12,7 @@ protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
     func startSpinnerAnimation()
     func stopSpinnerAnimation()
     func reloadTableView()
+    func stopRefreshing()
 }
 
 final class WeatherViewController: UIViewController {
@@ -20,6 +21,12 @@ final class WeatherViewController: UIViewController {
         let spinner = UIActivityIndicatorView()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        return refreshControl
     }()
     
     private lazy var weatherTableView: UITableView = {
@@ -76,6 +83,15 @@ extension WeatherViewController {
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }
+    
+    @objc
+    private func handleRefreshControl() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
+            self.viewModel.fetchWeatherData(location: self.viewModel.spesificLocation)
+            self.viewModel.returnLocation(location: self.viewModel.spesificLocation)
+        }
+    }
 }
 
 // MARK: - WeatherViewControllerProtocol
@@ -83,11 +99,13 @@ extension WeatherViewController: WeatherViewControllerProtocol {
     
     func configure(location: [String: Double], from isDetail: Bool) {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        
-        viewModel.fetchWeatherData(location: location)
-        viewModel.returnLocation(location: location)
+        viewModel.spesificLocation = location
+        viewModel.fetchWeatherData(location: viewModel.spesificLocation)
+        viewModel.returnLocation(location: viewModel.spesificLocation)
         
         self.isDetail = isDetail
+        
+        weatherTableView.refreshControl = refreshControl
         
         view.addSubviews(weatherTableView, spinner)
         setConstraints()
@@ -108,6 +126,12 @@ extension WeatherViewController: WeatherViewControllerProtocol {
     func reloadTableView() {
         DispatchQueue.main.async {
             self.weatherTableView.reloadData()
+        }
+    }
+    
+    func stopRefreshing() {
+        DispatchQueue.main.async { [weak self] in
+            self?.refreshControl.endRefreshing()
         }
     }
 }

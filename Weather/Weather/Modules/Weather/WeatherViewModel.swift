@@ -12,6 +12,7 @@ protocol WeatherViewModelProtocol {
     var hourly: [Hourly] { get set }
     var today: Daily? { get set }
     var location: WeatherLocationResponse? { get set }
+    var spesificLocation: [String: Double] { get set }
     
     func viewDidLoad()
     func fetchWeatherData(location: [String: Double])
@@ -29,6 +30,7 @@ final class WeatherViewModel {
     var hourly: [Hourly] = []
     var today: Daily?
     var location: WeatherLocationResponse?
+    var spesificLocation: [String : Double] = [:]
     
     init(view: WeatherViewControllerProtocol?) {
         self.view = view
@@ -76,6 +78,7 @@ extension WeatherViewModel {
                     self?.daily.removeFirst()
                     self?.view?.stopSpinnerAnimation()
                     self?.view?.reloadTableView()
+                    self?.view?.stopRefreshing()
                 }
             case let .failure(err):
                 switch err {
@@ -100,6 +103,7 @@ extension WeatherViewModel {
                 self?.view?.stopSpinnerAnimation()
                 self?.location = location
                 self?.view?.reloadTableView()
+                self?.view?.stopRefreshing()
             case let .failure(err):
                 switch err {
                 case .badRequest:
