@@ -10,3 +10,9 @@
 "weatherApp" = "Weather App";
 "home" = "Home";
 "map" = "Map";
+"Rain" = "Rain";
+"Clouds" = "Clouds";
+"Clear" = "Sunny";
+"Snow" = "Snow";
+"Drizzle" = "Drizzle";
+"Thunderstorm" = "Thunderstorm";

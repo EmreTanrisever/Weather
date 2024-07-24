@@ -22,13 +22,13 @@ class WeatherTabbarController: UITabBarController {
         let home = WeatherViewController()
         home.configure(location: location)
         home.title = "home".localized
-        home.tabBarItem.image = UIImage(named: "home")
-        home.tabBarItem.selectedImage = UIImage(named: "homefill")
+        home.tabBarItem.image = UIImage(named: "Home")
+        home.tabBarItem.selectedImage = UIImage(named: "Homefill")
         
         let map = MapViewController()
         map.title = "map".localized
-        map.tabBarItem.image = UIImage(named: "pin")
-        map.tabBarItem.selectedImage = UIImage(named: "pinfill")
+        map.tabBarItem.image = UIImage(named: "Pin")
+        map.tabBarItem.selectedImage = UIImage(named: "Pinfill")
         
         setViewControllers([home, map], animated: false)
         self.modalPresentationStyle = .fullScreen

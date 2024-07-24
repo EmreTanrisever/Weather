@@ -75,6 +75,7 @@ extension TodayForecastTableViewCell {
         contentView.addSubviews(locationLabel, dateLabel, weatherIconImageView, temperatureLabel, weatherDescription)
         
         weatherIconImageView.image = UIImage(named: ImageManager.shared.returnWeatherImage(imageName: image))
+        
         locationLabel.text = location
         temperatureLabel.text = todayTemperature + "°"
         dateLabel.text = viewModel.returnDate()
@@ -127,6 +128,6 @@ extension TodayForecastTableViewCell :TodayForecastTableViewCellProtocol {
         guard let today = viewModel.today else { return }
         
         weatherDescription.textColor = UIColor(named: today.first!.main)
-        weatherDescription.text = today.first!.main
+        weatherDescription.text = today.first!.main.localized
     }
 }
