@@ -12,7 +12,7 @@ struct ErrorDescriptions {
     let connectionErrorDescription = "There is no internet connection."
     
     let noDataErrorTitle = "No Data"
-    let noDataErrorDescription = "There is not data."
+    let noDataErrorDescription = "We can not find the place."
     
     let badRequestTitle = "Bad Request"
     let badRequestDescription = "Something went wrong."

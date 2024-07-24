@@ -10,6 +10,7 @@ import Foundation
 enum WeatherEndPoint {
     case getWeatherForecast(lon: Double, lat: Double)
     case getLocation(lon: Double, lat: Double)
+    case getSpesificLocation(cityName: String)
 }
 
 extension WeatherEndPoint: EndPointProtocol {
@@ -23,6 +24,8 @@ extension WeatherEndPoint: EndPointProtocol {
             return "api.openweathermap.org"
         case .getLocation(lon: _, lat: _):
             return "api.openweathermap.org"
+        case .getSpesificLocation(_):
+            return "api.openweathermap.org"
         }
     }
     
@@ -31,6 +34,8 @@ extension WeatherEndPoint: EndPointProtocol {
         case .getWeatherForecast(lon: _, lat: _):
             return "/data/2.5/onecall"
         case .getLocation(lon: _, lat: _):
+            return "/data/2.5/weather"
+        case .getSpesificLocation(_):
             return "/data/2.5/weather"
         }
     }
@@ -41,6 +46,8 @@ extension WeatherEndPoint: EndPointProtocol {
             return .get
         case .getLocation(lon: _, lat: _):
             return .get
+        case .getSpesificLocation(_):
+            return .get
         }
     }
     
@@ -49,6 +56,8 @@ extension WeatherEndPoint: EndPointProtocol {
         case .getWeatherForecast(lon: _, lat: _):
             return nil
         case .getLocation(lon: _, lat: _):
+            return nil
+        case .getSpesificLocation(_):
             return nil
         }
     }
@@ -72,8 +81,13 @@ extension WeatherEndPoint: EndPointProtocol {
                 "appid": "8ddadecc7ae4f56fee73b2b405a63659",
                 "units": "metric"
             ]
+        case .getSpesificLocation(cityName: let cityName):
+            return [
+                "lang": "en",
+                "appid": "8ddadecc7ae4f56fee73b2b405a63659",
+                "units": "metric",
+                "q": "\(cityName)"
+            ]
         }
     }
-    
-    
 }

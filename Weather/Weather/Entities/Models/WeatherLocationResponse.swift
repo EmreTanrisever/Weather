@@ -8,10 +8,16 @@
 import Foundation
 
 struct WeatherLocationResponse: Decodable {
+    let coord: Coord
     let sys: Sys
     let name: String
 }
 
 struct Sys: Decodable {
     let country: String
+}
+
+struct Coord: Decodable {
+    let lon: Double
+    let lat: Double
 }
