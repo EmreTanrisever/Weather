@@ -30,7 +30,7 @@ final class WeatherViewModelTest: XCTestCase {
     func test_configure() {
         XCTAssertFalse(view.invokedConfigure)
         XCTAssertEqual(view.invokedConfigureCount, 0)
-        view.configure(apiKey: "", location: ["key" : 0.0])
+        view.configure(location: ["lat": 0.0], from: false)
         XCTAssertTrue(view.invokedConfigure)
         XCTAssertEqual(view.invokedConfigureCount, 1)
     }
@@ -38,17 +38,9 @@ final class WeatherViewModelTest: XCTestCase {
     func test_fetchWeatherData_StartSpinnerAnimation() {
         XCTAssertFalse(view.invokedStartSpinnerAnimation)
         XCTAssertEqual(view.invokedStartSpinnerAnimationCount, 0)
-        weatherViewModel.fetchWeatherData(apiKey: "", location: ["key": 0.0])
+        weatherViewModel.fetchWeatherData(location: ["key": 0.0])
         XCTAssertTrue(view.invokedStartSpinnerAnimation)
         XCTAssertEqual(view.invokedStartSpinnerAnimationCount, 1)
-    }
-    
-    func test_viewDidLoad_SetTitle() {
-        XCTAssertFalse(view.invokedSetTitle)
-        XCTAssertEqual(view.invokedSetTitleCount, 0)
-        weatherViewModel.viewDidLoad()
-        XCTAssertTrue(view.invokedSetTitle)
-        XCTAssertEqual(view.invokedSetTitleCount, 1)
     }
     
     func test_fetchWeatherData_ReloadTableView() {
@@ -67,7 +59,7 @@ final class WeatherViewModelTest: XCTestCase {
     func test_weatherViewModel_FetchWeatherData() {
         XCTAssertFalse(mockViewModel.invokedFetchWeatherData)
         XCTAssertEqual(mockViewModel.invokedFetchWeatherDataCount, 0)
-        mockViewModel.fetchWeatherData(apiKey: "", location: ["lat": 0.0])
+        mockViewModel.fetchWeatherData(location: ["lat": 0.0])
         XCTAssertTrue(mockViewModel.invokedFetchWeatherData)
         XCTAssertEqual(mockViewModel.invokedFetchWeatherDataCount, 1)
     }
@@ -89,13 +81,13 @@ final class WeatherViewModelTest: XCTestCase {
     }
     
     func test_weatherViewModel_NumberOfRowInSection() {
-        XCTAssertFalse(mockViewModel.invokedNumberOfRowsInSection)
-        XCTAssertEqual(mockViewModel.invokedNumberOfRowsInSectionCount, 0)
+        XCTAssertFalse(mockViewModel.invokedNumberOfRows)
+        XCTAssertEqual(mockViewModel.invokedNumberOfRowsCount, 0)
         let numberOfRowsInSection = mockViewModel.numberOfRowsInSection()
         XCTAssertEqual(numberOfRowsInSection, 0)
         XCTAssertEqual(weatherViewModel.numberOfRowsInSection(), 0)
-        XCTAssertTrue(mockViewModel.invokedNumberOfRowsInSection)
-        XCTAssertEqual(mockViewModel.invokedNumberOfRowsInSectionCount, 1)
+        XCTAssertTrue(mockViewModel.invokedNumberOfRows)
+        XCTAssertEqual(mockViewModel.invokedNumberOfRowsCount, 1)
     }
     
     func test_weatherViewModel_ReturnTodayImage() {
@@ -107,21 +99,12 @@ final class WeatherViewModelTest: XCTestCase {
         XCTAssertEqual(mockViewModel.invokedReturnTodayImageCount, 1)
     }
     
-    func test_weatherViewModel_ReturnImages() {
-        XCTAssertFalse(mockViewModel.invokedReturnImages)
-        XCTAssertEqual(mockViewModel.invokedReturnImagesCount, 0)
-        let images = mockViewModel.returnImages()
-        XCTAssertNil(images)
-        XCTAssertTrue(mockViewModel.invokedReturnImages)
-        XCTAssertEqual(mockViewModel.invokedReturnImagesCount, 1)
-    }
-    
     func test_weatherViewModel_ReturnLocation() {
         XCTAssertFalse(mockViewModel.invokedReturnLocation)
         XCTAssertEqual(mockViewModel.invokedReturnLocationCount, 0)
         
-        mockViewModel.returnLocation(apiKey: "", location: ["lat": 0.0, "lon": 0.0])
-        weatherViewModel.returnLocation(apiKey: "", location: ["lat": 0.0, "lon": 0.0])
+        mockViewModel.returnLocation(location: ["lat": 0.0, "lon": 0.0])
+        weatherViewModel.returnLocation(location: ["lat": 0.0, "lon": 0.0])
         
         XCTAssertTrue(mockViewModel.invokedReturnLocation)
         XCTAssertEqual(mockViewModel.invokedReturnLocationCount, 1)

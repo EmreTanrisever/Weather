@@ -12,7 +12,7 @@ final class MockWeatherViewController: WeatherViewControllerProtocol {
     
     var invokedConfigure = false
     var invokedConfigureCount = 0
-    func configure(apiKey: String, location: [String : Double]) {
+    func configure(location: [String : Double], from isDetail: Bool) {
         invokedConfigure = true
         invokedConfigureCount += 1
     }
@@ -44,4 +44,13 @@ final class MockWeatherViewController: WeatherViewControllerProtocol {
         invokedSetTitle = true
         invokedSetTitleCount = 1
     }
+    
+    func stopRefreshing() {
+        
+    }
+    
+    func showAlert(type: NetworkErrors) {
+        
+    }
+    
 }

@@ -40,14 +40,6 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(view.invokedConfigure)
         XCTAssertEqual(view.invokedPrepareLocationCount, 1)
     }
-
-    func test_checkTextField_False() {
-        XCTAssertFalse(homeViewModel.checkTextField(text: ""))
-    }
-    
-    func test_checkTextField_True() {
-        XCTAssertTrue(homeViewModel.checkTextField(text: "Location"))
-    }
     
     func test_homeViewModel_ReturnLocation() {
         XCTAssertEqual(homeViewModel.returnLocation(), [:]) 

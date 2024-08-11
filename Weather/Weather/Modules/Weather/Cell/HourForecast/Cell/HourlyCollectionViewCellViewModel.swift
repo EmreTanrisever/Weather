@@ -17,7 +17,7 @@ final class HourlyCollectionViewCellViewModel {
     var icon: String?
     private weak var view: HourlyCollectionViewCellProtocol?
     
-    private let weatherService = WeatherService()
+    private let weatherService = WeatherService(networkManager: NetworkManager.shared)
     
     init(view: HourlyCollectionViewCellProtocol? = nil) {
         self.view = view

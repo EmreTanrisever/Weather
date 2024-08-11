@@ -9,6 +9,22 @@ import Foundation
 @testable import Weather
 
 final class MockHomeViewController: HomeViewProtocol {
+    func configureAnimation(animationName: String) {
+        
+    }
+    
+    func playAnimation() {
+    
+    }
+    
+    func stopAnimation() {
+        
+    }
+    
+    func showAlert(type: NetworkErrors) {
+        
+    }
+    
     
     var invokedConfigure = false
     var invokedConfigureCount = 0

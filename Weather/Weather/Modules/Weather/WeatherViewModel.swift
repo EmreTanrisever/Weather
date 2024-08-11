@@ -24,7 +24,7 @@ protocol WeatherViewModelProtocol {
 
 final class WeatherViewModel {
     private let view: WeatherViewControllerProtocol?
-    private let weatherService = WeatherService()
+    private let weatherService = WeatherService(networkManager: NetworkManager.shared)
     
     var daily: [Daily] = []
     var hourly: [Hourly] = []

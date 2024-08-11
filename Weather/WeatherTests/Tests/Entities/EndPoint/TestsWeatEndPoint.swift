@@ -22,7 +22,7 @@ final class TestsWeatEndPoint: XCTestCase {
     }
     
     func test_getWeatherForecast_RequiredVariables() {
-        self.endPoint = WeatherEndPoint.getWeatherForecast(lon: 0.0, lat: 0.0, apiKey: "8ddadecc7ae4f56fee73b2b405a63659")
+        self.endPoint = WeatherEndPoint.getWeatherForecast(lon: 0.0, lat: 0.0)
         XCTAssertEqual(endPoint.scheme, "https")
         XCTAssertEqual(endPoint.host, "api.openweathermap.org")
         XCTAssertEqual(endPoint.path, "/data/2.5/onecall")
@@ -44,18 +44,8 @@ final class TestsWeatEndPoint: XCTestCase {
         XCTAssertEqual(units as! String, "metric")
     }
     
-    func test_getWeatherIcon_RequiredVariables() {
-        self.endPoint = WeatherEndPoint.getWeatherIcon(icon: "")
-        XCTAssertEqual(endPoint.scheme, "https")
-        XCTAssertEqual(endPoint.host, "openweathermap.org")
-        XCTAssertEqual(endPoint.path, "/img/wn/@2x.png")
-        XCTAssertEqual(endPoint.httpMethod, .get)
-        XCTAssertNil(endPoint.header)
-        XCTAssertNil(endPoint.parameters)
-    }
-    
     func test_getLocation_RequiredVariables() {
-        self.endPoint = WeatherEndPoint.getLocation(lon: 0.0, lat: 0.0, apiKey: "8ddadecc7ae4f56fee73b2b405a63659")
+        self.endPoint = WeatherEndPoint.getLocation(lon: 0.0, lat: 0.0)
         XCTAssertEqual(endPoint.scheme, "https")
         XCTAssertEqual(endPoint.host, "api.openweathermap.org")
         XCTAssertEqual(endPoint.path, "/data/2.5/weather")

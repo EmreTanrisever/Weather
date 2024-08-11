@@ -15,7 +15,7 @@ protocol MapViewModelProtocol {
 
 final class MapViewModel {
     private weak var view: MapViewControllerProtocol?
-    private let weatherService = WeatherService()
+    private let weatherService = WeatherService(networkManager: NetworkManager.shared)
     var coordinate: Coord?
     
     init(view: MapViewControllerProtocol? = nil) {

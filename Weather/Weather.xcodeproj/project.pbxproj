@@ -11,6 +11,7 @@
 		E502E3B12C4654C300F6F047 /* TestsWeatEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E502E3B02C4654C300F6F047 /* TestsWeatEndPoint.swift */; };
 		E502E3B32C46633500F6F047 /* MockWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E502E3B22C46633500F6F047 /* MockWeatherViewModel.swift */; };
 		E503EB972C45801F00E66F36 /* MockHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E503EB962C45801F00E66F36 /* MockHomeViewController.swift */; };
+		E50B8CAE2C694157008B193D /* WeatherServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */; };
 		E5411EFA2C4F834A003B1458 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5411EF92C4F834A003B1458 /* ImageManager.swift */; };
 		E5411EFC2C4FA4C4003B1458 /* TodayForecastTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5411EFB2C4FA4C4003B1458 /* TodayForecastTableViewCellViewModel.swift */; };
 		E54FA52B2C459C150047B87D /* WeatherViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54FA52A2C459C150047B87D /* WeatherViewModelTest.swift */; };
@@ -24,7 +25,6 @@
 		E58C94462C46835E009A63A8 /* WeatherForecast.json in Resources */ = {isa = PBXBuildFile; fileRef = E58C94452C46835E009A63A8 /* WeatherForecast.json */; };
 		E58C94492C468389009A63A8 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C94482C468389009A63A8 /* MockNetworkManager.swift */; };
 		E58C94502C4686FB009A63A8 /* MockWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C944F2C4686FB009A63A8 /* MockWeatherService.swift */; };
-		E58C94532C468A7F009A63A8 /* TestsWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C94522C468A7F009A63A8 /* TestsWeatherService.swift */; };
 		E58CE3662C414730009A80D2 /* WeatherLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58CE3652C414730009A80D2 /* WeatherLocationResponse.swift */; };
 		E5921BAB2C493F0300D534BC /* TodayForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5921BAA2C493F0300D534BC /* TodayForecastTableViewCell.swift */; };
 		E5921BAF2C49470800D534BC /* HourForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5921BAE2C49470800D534BC /* HourForecastTableViewCell.swift */; };
@@ -83,6 +83,7 @@
 		E502E3B02C4654C300F6F047 /* TestsWeatEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsWeatEndPoint.swift; sourceTree = "<group>"; };
 		E502E3B22C46633500F6F047 /* MockWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherViewModel.swift; sourceTree = "<group>"; };
 		E503EB962C45801F00E66F36 /* MockHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewController.swift; sourceTree = "<group>"; };
+		E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeatherServiceTests.swift; path = WeatherTests/Tests/Services/WeatherServiceTests.swift; sourceTree = SOURCE_ROOT; };
 		E5411EF92C4F834A003B1458 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		E5411EFB2C4FA4C4003B1458 /* TodayForecastTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecastTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		E54FA52A2C459C150047B87D /* WeatherViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModelTest.swift; sourceTree = "<group>"; };
@@ -96,7 +97,6 @@
 		E58C94452C46835E009A63A8 /* WeatherForecast.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WeatherForecast.json; sourceTree = "<group>"; };
 		E58C94482C468389009A63A8 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
 		E58C944F2C4686FB009A63A8 /* MockWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherService.swift; sourceTree = "<group>"; };
-		E58C94522C468A7F009A63A8 /* TestsWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestsWeatherService.swift; path = ../../TestsWeatherService.swift; sourceTree = "<group>"; };
 		E58CE3652C414730009A80D2 /* WeatherLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationResponse.swift; sourceTree = "<group>"; };
 		E5921BAA2C493F0300D534BC /* TodayForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecastTableViewCell.swift; sourceTree = "<group>"; };
 		E5921BAE2C49470800D534BC /* HourForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourForecastTableViewCell.swift; sourceTree = "<group>"; };
@@ -275,7 +275,7 @@
 		E58C94512C468A4D009A63A8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E58C94522C468A7F009A63A8 /* TestsWeatherService.swift */,
+				E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */,
 			);
 			name = Services;
 			path = ../../../../../.Trash/Services;
@@ -758,7 +758,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E58C94532C468A7F009A63A8 /* TestsWeatherService.swift in Sources */,
 				E5F5E7832C44845700C4F3D7 /* HomeViewModelTests.swift in Sources */,
 				E503EB972C45801F00E66F36 /* MockHomeViewController.swift in Sources */,
 				E54FA52B2C459C150047B87D /* WeatherViewModelTest.swift in Sources */,
@@ -769,6 +768,7 @@
 				E58C94442C467E8E009A63A8 /* DeleteDecimal+Double.swift in Sources */,
 				E502E3AD2C4652F000F6F047 /* TestTimeStamp+String.swift in Sources */,
 				E502E3B12C4654C300F6F047 /* TestsWeatEndPoint.swift in Sources */,
+				E50B8CAE2C694157008B193D /* WeatherServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

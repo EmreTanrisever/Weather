@@ -14,7 +14,7 @@ protocol DailyForecastTableViewCellViewModelProtocol {
 }
 
 final class DailyForecastTableViewCellViewModel {
-    private var weatherService = WeatherService()
+    private var weatherService = WeatherService(networkManager: NetworkManager.shared)
     private var view: DailyForecastTableViewCellProtocol?
     
     var icon: String?
