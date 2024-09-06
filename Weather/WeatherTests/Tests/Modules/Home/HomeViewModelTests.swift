@@ -44,4 +44,14 @@ final class HomeViewModelTests: XCTestCase {
     func test_homeViewModel_ReturnLocation() {
         XCTAssertEqual(homeViewModel.returnLocation(), [:]) 
     }
+    
+    func test_homeViewModel_Alert() {
+        XCTAssertFalse(view.invokedAlert)
+        XCTAssertEqual(view.invokedAlertCount, 0)
+        
+        homeViewModel.alert()
+        
+        XCTAssertTrue(view.invokedAlert)
+        XCTAssertEqual(view.invokedAlertCount, 1)
+    }
 }

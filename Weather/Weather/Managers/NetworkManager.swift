@@ -24,7 +24,7 @@ extension NetworkManager: NetworkManagerProtocol {
     
     func execute<T>(
         urlRequest: EndPointProtocol,
-        completion: @escaping (Result<T, NetworkErrors>) -> Void
+        completion: @escaping(Result<T, NetworkErrors>) -> Void
     ) where T : Decodable {
         urlSession.dataTask(with: urlRequest.createURLRequest()) { data, response, error in
             if error != nil {
@@ -42,19 +42,6 @@ extension NetworkManager: NetworkManagerProtocol {
                 return
             }
             completion(.success(decodedData))
-        }.resume()
-    }
-    
-    func fetchImage(urlRequest: EndPointProtocol, completion: @escaping(Result<Data, NetworkErrors>) -> Void) {
-        urlSession.dataTask(with: urlRequest.createURLRequest()) { data, response, error in
-            if error != nil {
-                completion(.failure(.badRequest))
-            }
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
-            completion(.success(data))
         }.resume()
     }
     

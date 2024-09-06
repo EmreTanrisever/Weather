@@ -59,9 +59,9 @@ extension HomeViewModel {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 self.navigate = true
-            } else {
-                self.navigate = false
+                return
             }
+            self.navigate = false            
         }
         monitor.start(queue: DispatchQueue(label: "NetworkMonitor"))
     }

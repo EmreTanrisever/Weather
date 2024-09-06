@@ -10,7 +10,6 @@ import XCTest
 final class WeatherServiceTests: XCTestCase {
     
     
-    
     override func setUp() {
         super.setUp()
     }

@@ -8,6 +8,7 @@
 import Foundation
 
 protocol WeatherViewModelProtocol {
+    var weatherResponse: WeatherResponse? { get set }
     var daily: [Daily] { get set }
     var hourly: [Hourly] { get set }
     var today: Daily? { get set }
@@ -26,6 +27,7 @@ final class WeatherViewModel {
     private let view: WeatherViewControllerProtocol?
     private let weatherService = WeatherService(networkManager: NetworkManager.shared)
     
+    var weatherResponse: WeatherResponse?
     var daily: [Daily] = []
     var hourly: [Hourly] = []
     var today: Daily?
@@ -72,6 +74,7 @@ extension WeatherViewModel {
             switch result {
             case let .success(weather):
                 DispatchQueue.main.async {
+                    self?.weatherResponse = weather
                     self?.daily = weather.daily
                     self?.hourly = weather.hourly
                     self?.today = self?.daily.first

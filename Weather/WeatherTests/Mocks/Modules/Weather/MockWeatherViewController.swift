@@ -45,12 +45,18 @@ final class MockWeatherViewController: WeatherViewControllerProtocol {
         invokedSetTitleCount = 1
     }
     
+    var invokedStopRefreshing = false
+    var invokedStoprefreshingCount = 0
     func stopRefreshing() {
-        
+        invokedStopRefreshing = true
+        invokedStoprefreshingCount = 1
     }
     
+    var invokedShowAlert = false
+    var invokedShowAlertCount = 0
     func showAlert(type: NetworkErrors) {
-        
+        invokedShowAlert = true
+        invokedShowAlertCount = 1
     }
     
 }

@@ -19,14 +19,7 @@ extension WeatherEndPoint: EndPointProtocol {
     }
     
     var host: String {
-        switch self {
-        case .getWeatherForecast(lon: _, lat: _):
-            return "api.openweathermap.org"
-        case .getLocation(lon: _, lat: _):
-            return "api.openweathermap.org"
-        case .getSpesificLocation(_):
-            return "api.openweathermap.org"
-        }
+        return "api.openweathermap.org"
     }
     
     var path: String {

@@ -44,8 +44,6 @@ extension AlertShowable where Self: UIViewController {
                 exit(0)
             }))
         }
-        
-        
             guard let self = self else { return }
             self.present(alert, animated: true)
         }

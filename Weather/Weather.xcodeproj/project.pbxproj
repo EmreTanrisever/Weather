@@ -83,7 +83,7 @@
 		E502E3B02C4654C300F6F047 /* TestsWeatEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsWeatEndPoint.swift; sourceTree = "<group>"; };
 		E502E3B22C46633500F6F047 /* MockWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherViewModel.swift; sourceTree = "<group>"; };
 		E503EB962C45801F00E66F36 /* MockHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewController.swift; sourceTree = "<group>"; };
-		E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeatherServiceTests.swift; path = WeatherTests/Tests/Services/WeatherServiceTests.swift; sourceTree = SOURCE_ROOT; };
+		E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeatherServiceTests.swift; path = WeatherTests/Tests/Service/WeatherServiceTests.swift; sourceTree = SOURCE_ROOT; };
 		E5411EF92C4F834A003B1458 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		E5411EFB2C4FA4C4003B1458 /* TodayForecastTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecastTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		E54FA52A2C459C150047B87D /* WeatherViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModelTest.swift; sourceTree = "<group>"; };
@@ -214,6 +214,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		E50B8CAF2C694753008B193D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		E53961122C45844100F4A36F /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,15 +278,6 @@
 				E58C944F2C4686FB009A63A8 /* MockWeatherService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		E58C94512C468A4D009A63A8 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				E50B8CAD2C694157008B193D /* WeatherServiceTests.swift */,
-			);
-			name = Services;
-			path = ../../../../../.Trash/Services;
 			sourceTree = "<group>";
 		};
 		E5921BAC2C49466400D534BC /* TodayForecast */ = {
@@ -561,7 +560,7 @@
 		E5F5E7802C44843500C4F3D7 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				E58C94512C468A4D009A63A8 /* Services */,
+				E50B8CAF2C694753008B193D /* Service */,
 				E58C944A2C46858B009A63A8 /* Utilities */,
 				E502E3AE2C4654A800F6F047 /* Entities */,
 				E502E3A82C4652CB00F6F047 /* Modules */,

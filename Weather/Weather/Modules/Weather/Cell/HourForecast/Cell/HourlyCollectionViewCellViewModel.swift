@@ -33,6 +33,4 @@ extension HourlyCollectionViewCellViewModel: HourlyCollectionViewCellViewModelPr
             view?.fillImage()
         }
     }
-    
-    
 }

@@ -17,7 +17,6 @@ final class HourForecastTableViewCell: UITableViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(HourlyCollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
         collectionView.backgroundColor = UIColor(named: "BackgroundColor")
@@ -74,8 +73,4 @@ extension HourForecastTableViewCell: UICollectionViewDataSource {
         cell.fillUI(hourly: viewModel.hourly[indexPath.row])
         return cell
     }
-}
-
-extension HourForecastTableViewCell: UICollectionViewDelegate {
-    
 }
