@@ -22,25 +22,25 @@ extension AlertShowable where Self: UIViewController {
         case .noInternetConnection:
             alert.title = errorDescription.connectionErrorTitle
             alert.message = errorDescription.connectionErrorDescription
-            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
                 exit(0)
             }))
         case .badRequest:
             alert.title = errorDescription.badRequestTitle
             alert.message = errorDescription.badRequestDescription
-            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
                 exit(0)
             }))
         case .noData:
             alert.title = errorDescription.noDataErrorTitle
             alert.message = errorDescription.noDataErrorDescription
-            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
                 
             }))
         case .decodeError:
             alert.title = errorDescription.decodeErrorTitle
             alert.message = errorDescription.decodeErrorDescription
-            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
                 exit(0)
             }))
         }

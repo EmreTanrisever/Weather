@@ -16,3 +16,18 @@
 "Snow" = "Snow";
 "Drizzle" = "Drizzle";
 "Thunderstorm" = "Thunderstorm";
+
+"ok" = "Ok";
+
+// MARK: - Network Error
+"connectionError" = "Connection error";
+"connectionErrorMessage" = "There is no internet connection.";
+
+"noData" = "No Data";
+"noDataErrorMessage" = "We can not find the place.";
+
+"badRequest" = "Bad Request";
+"badRequestMessage" = "Something went wrong.";
+
+"decodeError" = "Decode Error";
+"decodeErrorMessage" = "Data can not be decoded.";

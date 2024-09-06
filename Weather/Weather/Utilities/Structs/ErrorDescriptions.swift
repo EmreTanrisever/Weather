@@ -8,15 +8,15 @@
 import Foundation
 
 struct ErrorDescriptions {
-    let connectionErrorTitle = "Connection error"
-    let connectionErrorDescription = "There is no internet connection."
+    let connectionErrorTitle = "connectionError".localized
+    let connectionErrorDescription = "connectionErrorMessage".localized
     
-    let noDataErrorTitle = "No Data"
-    let noDataErrorDescription = "We can not find the place."
+    let noDataErrorTitle = "noData".localized
+    let noDataErrorDescription = "noDataErrorMessage".localized
     
-    let badRequestTitle = "Bad Request"
-    let badRequestDescription = "Something went wrong."
+    let badRequestTitle = "badRequest".localized
+    let badRequestDescription = "badRequestMessage".localized
     
-    let decodeErrorTitle = "Decode Error"
-    let decodeErrorDescription = "Data can not be decoded."
+    let decodeErrorTitle = "decodeError".localized
+    let decodeErrorDescription = "decodeErrorMessage".localized
 }

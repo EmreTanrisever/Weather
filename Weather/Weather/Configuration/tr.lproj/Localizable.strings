@@ -16,3 +16,18 @@
 "Snow" = "Karlı";
 "Drizzle" = "Yağmurlu";
 "Thunderstorm" = "Fırtına";
+
+"ok" = "Tamam";
+
+// MARK: - Network Error
+"connectionError" = "Bağlantı hatası";
+"connectionErrorMessage" = "İnternet bağlantısı yok.";
+
+"noData" = "Veri yok";
+"noDataErrorMessage" = "Girmiş olduğunuz veriyi bulamadık.";
+
+"badRequest" = "Kötü istek";
+"badRequestMessage" = "Bir şeyler yanlış gitti.";
+
+"decodeError" = "Kod Çözme Hatası";
+"decodeErrorMessage" = "Verilerin kodu çözülemedi.";
