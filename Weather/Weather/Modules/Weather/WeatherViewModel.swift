@@ -34,6 +34,7 @@ final class WeatherViewModel {
     var location: WeatherLocationResponse?
     var spesificLocation: [String : Double] = [:]
     
+    
     init(view: WeatherViewControllerProtocol?) {
         self.view = view
     }

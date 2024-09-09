@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
     func configure(location: [String: Double]?, from isDetail: Bool)
@@ -13,6 +14,8 @@ protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
     func stopSpinnerAnimation()
     func reloadTableView()
     func stopRefreshing()
+    func showLocationPermissionView()
+    func showWeatherView()
 }
 
 final class WeatherViewController: UIViewController {
@@ -87,16 +90,22 @@ final class WeatherViewController: UIViewController {
     
     lazy var viewModel: WeatherViewModelProtocol = WeatherViewModel(view: self)
     private var isDetail: Bool = false
+    private let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        checkLocationPermission()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isDetail ? hideNavigationBar() : showNavigationBar()
-        
-        
+        checkLocationPermission()
     }
 }
 
@@ -177,19 +186,19 @@ extension WeatherViewController: WeatherViewControllerProtocol {
     
     func configure(location: [String: Double]?, from isDetail: Bool) {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        if let location = location {
-            viewModel.spesificLocation = location
+        viewModel.spesificLocation = location ?? [:]
+        if !isDetail {
             viewModel.fetchWeatherData(location: viewModel.spesificLocation)
             viewModel.returnLocation(location: viewModel.spesificLocation)
-            self.isDetail = isDetail
-            
-            weatherTableView.refreshControl = refreshControl
-            
-            view.addSubviews(weatherTableView, spinner)
-            setConstraints()
-        } else {
-            setupUI()
         }
+        self.isDetail = isDetail
+        
+        weatherTableView.refreshControl = refreshControl
+        
+        view.addSubviews(weatherTableView, spinner)
+        setConstraints()
+        
+        setupUI()
     }
     
     func startSpinnerAnimation() {
@@ -214,6 +223,11 @@ extension WeatherViewController: WeatherViewControllerProtocol {
         DispatchQueue.main.async { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+        
+    func showWeatherView() {
+        weatherTableView.isHidden = false
+        spinner.isHidden = false
     }
 }
 
@@ -287,5 +301,81 @@ extension WeatherViewController: CellDelegate {
     
     func labelTapped() {
         tabBarController?.selectedIndex = 1
+    }
+}
+
+extension WeatherViewController: CLLocationManagerDelegate {
+
+    private func checkLocationPermission() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            hideLocationPermissionView()
+            showWeatherView()
+        case .denied, .restricted:
+            if isDetail {
+                showLocationPermissionView()
+                hideWeatherView()
+            } else {
+                hideLocationPermissionView()
+                showWeatherView()
+            }
+        @unknown default:
+            break
+        }
+    }
+    
+    @objc private func appWillEnterForeground() {
+        checkLocationPermission()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+            switch status {
+            case .authorizedWhenInUse, .authorizedAlways:
+                locationManager.startUpdatingLocation()
+                hideLocationPermissionView()
+                showWeatherView()
+            case .denied, .restricted:
+                if isDetail {
+                    showLocationPermissionView()
+                    hideWeatherView()
+                } else {
+                    hideLocationPermissionView()
+                    showWeatherView()
+                }
+            @unknown default:
+                break
+            }
+        }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            viewModel.spesificLocation = ["lat": location.coordinate.latitude, "lon": location.coordinate.longitude]
+            if isDetail {
+                viewModel.fetchWeatherData(location: viewModel.spesificLocation)
+                viewModel.returnLocation(location: viewModel.spesificLocation)
+            }
+        }
+    }
+    
+    private func hideWeatherView() {
+        weatherTableView.isHidden = true
+        spinner.isHidden = true
+    }
+    
+    func showLocationPermissionView() {
+        imageView.isHidden = false
+        titleLabel.isHidden = false
+        messageLabel.isHidden = false
+        settingsButton.isHidden = false
+    }
+    
+    func hideLocationPermissionView() {
+        imageView.isHidden = true
+        titleLabel.isHidden = true
+        messageLabel.isHidden = true
+        settingsButton.isHidden = true
     }
 }
