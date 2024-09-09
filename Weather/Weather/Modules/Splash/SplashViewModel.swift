@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  SplashViewModel.swift
 //  Weather
 //
 //  Created by Emre Tanrısever on 11.07.2024.
@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-protocol HomeViewModelProtocol {
+protocol SplashViewModelProtocol {
     var navigate: Bool { get set }
     func viewDidLoad()
     func addLocation(lat: Double, lon: Double)
@@ -16,18 +16,18 @@ protocol HomeViewModelProtocol {
     func alert()
 }
 
-final class HomeViewModel {
-    private weak var view: HomeViewProtocol?
+final class SplashViewModel {
+    private weak var view: SplashViewProtocol?
     private var location: [String: Double] = [:]
     
     var navigate = false
     
-    init(view: HomeViewProtocol? = nil) {
+    init(view: SplashViewProtocol? = nil) {
         self.view = view
     }
 }
 
-extension HomeViewModel: HomeViewModelProtocol {
+extension SplashViewModel: SplashViewModelProtocol {
     
     func viewDidLoad() {
         checkInternetConnection()
@@ -52,7 +52,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 }
 
-extension HomeViewModel {
+extension SplashViewModel {
     
     private func checkInternetConnection() {
         let monitor = NWPathMonitor()

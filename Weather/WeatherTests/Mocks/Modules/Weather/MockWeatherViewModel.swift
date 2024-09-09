@@ -9,6 +9,7 @@ import Foundation
 @testable import Weather
 
 final class MockWeatherViewModel: WeatherViewModelProtocol {
+    var weatherResponse: WeatherResponse?
     var hourly: [Hourly] = []
     var spesificLocation: [String : Double] = [:]
     var daily: [Daily] = []

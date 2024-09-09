@@ -48,7 +48,6 @@ final class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {

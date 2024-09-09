@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SplashController.swift
 //  Weather
 //
 //  Created by Emre Tanrısever on 11.07.2024.
@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import Lottie
 
-protocol HomeViewProtocol: AnyObject, AlertShowable {
+protocol SplashViewProtocol: AnyObject, AlertShowable {
     
     func configure()
     func prepareLocation()
@@ -18,10 +18,10 @@ protocol HomeViewProtocol: AnyObject, AlertShowable {
     func stopAnimation()
 }
 
-final class HomeViewController: UIViewController {
+final class SplashViewController: UIViewController {
     
     private var animationView: LottieAnimationView!
-    private lazy var viewModel: HomeViewModelProtocol = HomeViewModel(view: self)
+    private lazy var viewModel: SplashViewModelProtocol = SplashViewModel(view: self)
     private var locationManager: CLLocationManager?
     
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: HomeViewProtocol {
+extension SplashViewController: SplashViewProtocol {
     
     func configure() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
@@ -70,7 +70,7 @@ extension HomeViewController: HomeViewProtocol {
 }
 
 // MARK: - CLLocationManagerDelegate
-extension HomeViewController: CLLocationManagerDelegate {
+extension SplashViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let first = locations.first else { return }

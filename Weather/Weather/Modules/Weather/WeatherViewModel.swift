@@ -15,7 +15,6 @@ protocol WeatherViewModelProtocol {
     var location: WeatherLocationResponse? { get set }
     var spesificLocation: [String: Double] { get set }
     
-    func viewDidLoad()
     func fetchWeatherData(location: [String: Double])
     func numberOfRowsInSection() -> Int
     func returnTodayImage() -> String?
@@ -40,10 +39,6 @@ final class WeatherViewModel {
 }
 
 extension WeatherViewModel: WeatherViewModelProtocol {
-    
-    func viewDidLoad() {
-   
-    }
     
     func fetchWeatherData(location: [String: Double]) {
         getWeatherData(location: location)

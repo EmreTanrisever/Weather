@@ -1,5 +1,5 @@
 //
-//  MockHomeViewController.swift
+//  MockSplashViewController.swift
 //  WeatherTests
 //
 //  Created by Emre Tanrısever on 15.07.2024.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import Weather
 
-final class MockHomeViewController: HomeViewProtocol {
+final class MockSplashViewController: SplashViewProtocol {
     
     var invokedConfigure = false
     var invokedConfigureCount = 0
