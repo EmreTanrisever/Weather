@@ -19,6 +19,10 @@
 
 "ok" = "Tamam";
 
+"locationServicesDisabled" = "Konum Servisleri Devre Dışı";
+"pleaseEnableLocationServicesToUseTheWeatherApp" = "Lütfen hava durumu uygulamasını kullanmak için konum servislerini etkinleştirin.";
+"goToSettings" = "Ayarlar'a git";
+
 // MARK: - Network Error
 "connectionError" = "Bağlantı hatası";
 "connectionErrorMessage" = "İnternet bağlantısı yok.";

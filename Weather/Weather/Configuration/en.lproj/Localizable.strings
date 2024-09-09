@@ -19,6 +19,10 @@
 
 "ok" = "Ok";
 
+"locationServicesDisabled" = "Location Services Disabled";
+"pleaseEnableLocationServicesToUseTheWeatherApp" = "Please enable location services to use the weather app.";
+"goToSettings" = "Go to Settings";
+
 // MARK: - Network Error
 "connectionError" = "Connection error";
 "connectionErrorMessage" = "There is no internet connection.";

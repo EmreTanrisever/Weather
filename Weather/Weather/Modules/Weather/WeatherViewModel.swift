@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol WeatherViewModelProtocol {
     var weatherResponse: WeatherResponse? { get set }
@@ -55,9 +56,9 @@ extension WeatherViewModel: WeatherViewModelProtocol {
     func returnLocation(location: [String : Double]) {
         fetchLocation(location: location)
     }
-        
+    
     func returnLocationTitle() -> String {
-        (location?.name ?? "") + ", " + (location?.sys.country ?? "") 
+        (location?.name ?? "") + ", " + (location?.sys.country ?? "")
     }
 }
 

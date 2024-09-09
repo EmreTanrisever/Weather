@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
-    func configure(location: [String: Double], from isDetail: Bool)
+    func configure(location: [String: Double]?, from isDetail: Bool)
     func startSpinnerAnimation()
     func stopSpinnerAnimation()
     func reloadTableView()
@@ -43,6 +43,48 @@ final class WeatherViewController: UIViewController {
         return tableView
     }()
     
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "location.slash.fill")
+        imageView.tintColor = .systemRed
+        return imageView
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "locationServicesDisabled".localized
+        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.textColor = .label
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "pleaseEnableLocationServicesToUseTheWeatherApp".localized
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var settingsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("goToSettings".localized, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(openSettings), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var viewModel: WeatherViewModelProtocol = WeatherViewModel(view: self)
     private var isDetail: Bool = false
     
@@ -53,6 +95,8 @@ final class WeatherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isDetail ? hideNavigationBar() : showNavigationBar()
+        
+        
     }
 }
 
@@ -83,6 +127,41 @@ extension WeatherViewController {
         }
     }
     
+    private func setupUI() {
+        view.addSubview(imageView)
+        view.addSubview(titleLabel)
+        view.addSubview(messageLabel)
+        view.addSubview(settingsButton)
+        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            imageView.widthAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            messageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
+            settingsButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 30),
+            settingsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            settingsButton.widthAnchor.constraint(equalToConstant: 200),
+            settingsButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    @objc private func openSettings() {
+        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(appSettings) {
+                UIApplication.shared.open(appSettings)
+            }
+        }
+    }
+    
     @objc
     private func handleRefreshControl() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
@@ -96,18 +175,21 @@ extension WeatherViewController {
 // MARK: - WeatherViewControllerProtocol
 extension WeatherViewController: WeatherViewControllerProtocol {
     
-    func configure(location: [String: Double], from isDetail: Bool) {
+    func configure(location: [String: Double]?, from isDetail: Bool) {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        viewModel.spesificLocation = location
-        viewModel.fetchWeatherData(location: viewModel.spesificLocation)
-        viewModel.returnLocation(location: viewModel.spesificLocation)
-        
-        self.isDetail = isDetail
-        
-        weatherTableView.refreshControl = refreshControl
-        
-        view.addSubviews(weatherTableView, spinner)
-        setConstraints()
+        if let location = location {
+            viewModel.spesificLocation = location
+            viewModel.fetchWeatherData(location: viewModel.spesificLocation)
+            viewModel.returnLocation(location: viewModel.spesificLocation)
+            self.isDetail = isDetail
+            
+            weatherTableView.refreshControl = refreshControl
+            
+            view.addSubviews(weatherTableView, spinner)
+            setConstraints()
+        } else {
+            setupUI()
+        }
     }
     
     func startSpinnerAnimation() {

@@ -13,7 +13,7 @@ class WeatherTabbarController: UITabBarController {
         super.viewDidLoad()
     }
     
-    func configure(location: [String: Double]) {
+    func configure(location: [String: Double]?) {
         tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
         tabBar.layer.shadowRadius = 10
         tabBar.layer.shadowColor = UIColor.systemGray.cgColor

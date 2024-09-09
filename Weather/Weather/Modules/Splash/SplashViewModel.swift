@@ -12,7 +12,7 @@ protocol SplashViewModelProtocol {
     var navigate: Bool { get set }
     func viewDidLoad()
     func addLocation(lat: Double, lon: Double)
-    func returnLocation() -> [String: Double]
+    func returnLocation() -> [String: Double]?
     func alert()
 }
 
@@ -43,7 +43,10 @@ extension SplashViewModel: SplashViewModelProtocol {
         location["lon"] = lon
     }
     
-    func returnLocation() -> [String : Double] {
+    func returnLocation() -> [String : Double]? {
+        if location.isEmpty {
+            return nil
+        }
         return location
     }
     
