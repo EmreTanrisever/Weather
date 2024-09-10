@@ -21,6 +21,7 @@ protocol WeatherViewModelProtocol {
     func returnTodayImage() -> String?
     func returnLocation(location: [String: Double])
     func returnLocationTitle() -> String
+    func checkPermissionView(isDetail: Bool)
 }
 
 final class WeatherViewModel {
@@ -60,6 +61,16 @@ extension WeatherViewModel: WeatherViewModelProtocol {
     
     func returnLocationTitle() -> String {
         (location?.name ?? "") + ", " + (location?.sys.country ?? "")
+    }
+    
+    func checkPermissionView(isDetail: Bool) {
+        if isDetail {
+            view?.showLocationPermissionView()
+            view?.hideWeatherView()
+        } else {
+            view?.hideLocationPermissionView()
+            view?.showWeatherView()
+        }
     }
 }
 

@@ -16,6 +16,8 @@ protocol WeatherViewControllerProtocol: AnyObject, AlertShowable {
     func stopRefreshing()
     func showLocationPermissionView()
     func showWeatherView()
+    func hideWeatherView()
+    func hideLocationPermissionView()
 }
 
 final class WeatherViewController: UIViewController {
@@ -197,7 +199,6 @@ extension WeatherViewController: WeatherViewControllerProtocol {
         
         view.addSubviews(weatherTableView, spinner)
         setConstraints()
-        
         setupUI()
     }
     
@@ -227,7 +228,25 @@ extension WeatherViewController: WeatherViewControllerProtocol {
         
     func showWeatherView() {
         weatherTableView.isHidden = false
-        spinner.isHidden = false
+    }
+    
+    func hideWeatherView() {
+        weatherTableView.isHidden = true
+        spinner.isHidden = true
+    }
+    
+    func showLocationPermissionView() {
+        imageView.isHidden = false
+        titleLabel.isHidden = false
+        messageLabel.isHidden = false
+        settingsButton.isHidden = false
+    }
+    
+    func hideLocationPermissionView() {
+        imageView.isHidden = true
+        titleLabel.isHidden = true
+        messageLabel.isHidden = true
+        settingsButton.isHidden = true
     }
 }
 
@@ -315,13 +334,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
             hideLocationPermissionView()
             showWeatherView()
         case .denied, .restricted:
-            if isDetail {
-                showLocationPermissionView()
-                hideWeatherView()
-            } else {
-                hideLocationPermissionView()
-                showWeatherView()
-            }
+            viewModel.checkPermissionView(isDetail: isDetail)
         @unknown default:
             break
         }
@@ -338,13 +351,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
                 hideLocationPermissionView()
                 showWeatherView()
             case .denied, .restricted:
-                if isDetail {
-                    showLocationPermissionView()
-                    hideWeatherView()
-                } else {
-                    hideLocationPermissionView()
-                    showWeatherView()
-                }
+                viewModel.checkPermissionView(isDetail: isDetail)
             @unknown default:
                 break
             }
@@ -358,24 +365,5 @@ extension WeatherViewController: CLLocationManagerDelegate {
                 viewModel.returnLocation(location: viewModel.spesificLocation)
             }
         }
-    }
-    
-    private func hideWeatherView() {
-        weatherTableView.isHidden = true
-        spinner.isHidden = true
-    }
-    
-    func showLocationPermissionView() {
-        imageView.isHidden = false
-        titleLabel.isHidden = false
-        messageLabel.isHidden = false
-        settingsButton.isHidden = false
-    }
-    
-    func hideLocationPermissionView() {
-        imageView.isHidden = true
-        titleLabel.isHidden = true
-        messageLabel.isHidden = true
-        settingsButton.isHidden = true
     }
 }
