@@ -62,4 +62,7 @@ final class MockWeatherViewModel: WeatherViewModelProtocol {
         return ""
     }
     
+    func checkPermissionView(isDetail: Bool) {
+        
+    }
 }

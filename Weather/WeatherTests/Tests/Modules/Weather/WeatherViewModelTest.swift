@@ -16,7 +16,7 @@ final class WeatherViewModelTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        view = .init()
+        view = MockWeatherViewController()
         weatherViewModel = WeatherViewModel(view: view)
         mockViewModel = .init()
     }
@@ -25,6 +25,38 @@ final class WeatherViewModelTest: XCTestCase {
         super.tearDown()
         view = nil
         weatherViewModel = nil
+    }
+    
+    func test_weatherViewModel_checkPermissionViewTrue() {
+        XCTAssertFalse(view.invokedShowLocationPersmissionView)
+        XCTAssertFalse(view.invokedHideWeatherView)
+        
+        XCTAssertEqual(view.invokedShowLocationPersmissionViewCount, 0)
+        XCTAssertEqual(view.invokedHideWeatherViewCount, 0)
+        
+        weatherViewModel.checkPermissionView(isDetail: true)
+        
+        XCTAssertTrue(view.invokedShowLocationPersmissionView)
+        XCTAssertTrue(view.invokedHideWeatherView)
+        
+        XCTAssertEqual(view.invokedShowLocationPersmissionViewCount, 1)
+        XCTAssertEqual(view.invokedHideWeatherViewCount, 1)
+    }
+    
+    func test_weatherViewModel_checkPermissionViewFalse() {
+        XCTAssertFalse(view.invokedHideLocationPermission)
+        XCTAssertFalse(view.invokedShowWeatherView)
+        
+        XCTAssertEqual(view.invokedHideLocationPermissionCount, 0)
+        XCTAssertEqual(view.invokedShowWeatherViewCount, 0)
+        
+        weatherViewModel.checkPermissionView(isDetail: false)
+        
+        XCTAssertTrue(view.invokedHideLocationPermission)
+        XCTAssertTrue(view.invokedShowWeatherView)
+        
+        XCTAssertEqual(view.invokedHideLocationPermissionCount, 1)
+        XCTAssertEqual(view.invokedShowWeatherViewCount, 1)
     }
     
     func test_configure() {

@@ -22,6 +22,7 @@ protocol WeatherViewModelProtocol {
     func returnLocation(location: [String: Double])
     func returnLocationTitle() -> String
     func checkPermissionView(isDetail: Bool)
+    func locationManagerGetData(isDetail: Bool)
 }
 
 final class WeatherViewModel {
@@ -70,6 +71,13 @@ extension WeatherViewModel: WeatherViewModelProtocol {
         } else {
             view?.hideLocationPermissionView()
             view?.showWeatherView()
+        }
+    }
+    
+    func locationManagerGetData(isDetail: Bool) {
+        if isDetail {
+            fetchWeatherData(location: spesificLocation)
+            returnLocation(location: spesificLocation)
         }
     }
 }

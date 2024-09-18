@@ -225,7 +225,7 @@ extension WeatherViewController: WeatherViewControllerProtocol {
             self?.refreshControl.endRefreshing()
         }
     }
-        
+    
     func showWeatherView() {
         weatherTableView.isHidden = false
     }
@@ -324,9 +324,10 @@ extension WeatherViewController: CellDelegate {
 }
 
 extension WeatherViewController: CLLocationManagerDelegate {
-
+    
     private func checkLocationPermission() {
-        switch CLLocationManager.authorizationStatus() {
+        let manager = CLLocationManager()
+        switch manager.authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse, .authorizedAlways:
@@ -345,25 +346,24 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-            switch status {
-            case .authorizedWhenInUse, .authorizedAlways:
-                locationManager.startUpdatingLocation()
-                hideLocationPermissionView()
-                showWeatherView()
-            case .denied, .restricted:
-                viewModel.checkPermissionView(isDetail: isDetail)
-            @unknown default:
-                break
-            }
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+            hideLocationPermissionView()
+            showWeatherView()
+        case .denied, .restricted:
+            viewModel.checkPermissionView(isDetail: isDetail)
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        @unknown default:
+            break
         }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             viewModel.spesificLocation = ["lat": location.coordinate.latitude, "lon": location.coordinate.longitude]
-            if isDetail {
-                viewModel.fetchWeatherData(location: viewModel.spesificLocation)
-                viewModel.returnLocation(location: viewModel.spesificLocation)
-            }
+            viewModel.locationManagerGetData(isDetail: isDetail)
         }
     }
 }

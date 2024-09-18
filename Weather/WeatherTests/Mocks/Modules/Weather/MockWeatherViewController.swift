@@ -12,7 +12,7 @@ final class MockWeatherViewController: WeatherViewControllerProtocol {
     
     var invokedConfigure = false
     var invokedConfigureCount = 0
-    func configure(location: [String : Double], from isDetail: Bool) {
+    func configure(location: [String : Double]?, from isDetail: Bool) {
         invokedConfigure = true
         invokedConfigureCount += 1
     }
@@ -59,4 +59,31 @@ final class MockWeatherViewController: WeatherViewControllerProtocol {
         invokedShowAlertCount = 1
     }
     
+    var invokedShowLocationPersmissionView = false
+    var invokedShowLocationPersmissionViewCount = 0
+    func showLocationPermissionView() {
+        invokedShowLocationPersmissionView = true
+        invokedShowLocationPersmissionViewCount = 1
+    }
+    
+    var invokedShowWeatherView = false
+    var invokedShowWeatherViewCount = 0
+    func showWeatherView() {
+        invokedShowWeatherView = true
+        invokedShowWeatherViewCount = 1
+    }
+    
+    var invokedHideWeatherView = false
+    var invokedHideWeatherViewCount = 0
+    func hideWeatherView() {
+        invokedHideWeatherView = true
+        invokedHideWeatherViewCount = 1
+    }
+    
+    var invokedHideLocationPermission = false
+    var invokedHideLocationPermissionCount = 0
+    func hideLocationPermissionView() {
+        invokedHideLocationPermission = true
+        invokedHideLocationPermissionCount = 1
+    }
 }
